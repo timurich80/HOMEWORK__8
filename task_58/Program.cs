@@ -7,37 +7,41 @@
 15 18 */
 
 
-int[,] array = new int[2,2];
-int[,] secondArray = new int[2,2];
-int[,] resultArray = new int[2,2];
+int[,] array = new int[2, 2];
+int[,] secondArray = new int[2, 2];
+int[,] resultArray = new int[2, 2];
 
 
-FillArrayRandom(array);
-PrintArray2D(array);
-
-Console.WriteLine();
-
-FillArrayRandom(secondArray);
-PrintArray2D(secondArray);
+FillArray(array);
+PrintArray(array);
 
 Console.WriteLine();
 
-PrintArray2D(resultArray);
+FillArray(secondArray);
+PrintArray(secondArray);
 
 Console.WriteLine();
-for (int i = 0; i < array.GetLength(0); i++)
+Multiplication(array,secondArray);
+PrintArray(resultArray);
+
+int[,] Multiplication(int[,] a, int[,] b)
 {
-    for (int j = 0; j < secondArray.GetLength(1); j++)
+    if (a.GetLength(1) != b.GetLength(0)) throw new Exception("Матрицы нельзя перемножить");
+    int[,] resultArray = new int[a.GetLength(0), b.GetLength(1)];
+    for (int i = 0; i < a.GetLength(0); i++)
     {
-        
-        for (int k = 0; k < array.GetLength(1); k++)
+        for (int j = 0; j < b.GetLength(1); j++)
         {
-            resultArray[i, j] += array[i, k] * secondArray[k, j];
+            for (int k = 0; k < b.GetLength(0); k++)
+            {
+                resultArray[i, j] += a[i, k] * b[k, j];
+            }
         }
     }
+    return resultArray;
 }
 
-void FillArrayRandom(int[,] array)
+void FillArray(int[,] array)
 {
     for (int i = 0; i < array.GetLength(0); i++)
     {
@@ -47,9 +51,8 @@ void FillArrayRandom(int[,] array)
         }
     }
 }
-
-// Функция вывода двумерного массива в терминал 
-void PrintArray2D(int[,] array)
+ 
+void PrintArray(int[,] array)
 {
     for (int i = 0; i < array.GetLength(0); i++)
     {
